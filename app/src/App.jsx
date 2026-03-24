@@ -63,7 +63,6 @@ function Navigation() {
             <a href="#founder" className="text-slate-700 hover:text-brand font-medium text-sm transition-colors">Our Founder</a>
             <a href="#about" className="text-slate-700 hover:text-brand font-medium text-sm transition-colors">About</a>
             <a href="#mission" className="text-slate-700 hover:text-brand font-medium text-sm transition-colors">Mission</a>
-            <a href="#programs" className="text-slate-700 hover:text-brand font-medium text-sm transition-colors">Programs</a>
             <a href="#press" className="text-slate-700 hover:text-brand font-medium text-sm transition-colors">Press</a>
             <a href="#contact" className="text-slate-700 hover:text-brand font-medium text-sm transition-colors">Contact</a>
           </div>
@@ -93,7 +92,6 @@ function Navigation() {
               <a href="#founder" onClick={() => setMenuOpen(false)} className="block text-slate-700 font-medium">Our Founder</a>
               <a href="#about" onClick={() => setMenuOpen(false)} className="block text-slate-700 font-medium">About</a>
               <a href="#mission" onClick={() => setMenuOpen(false)} className="block text-slate-700 font-medium">Mission</a>
-              <a href="#programs" onClick={() => setMenuOpen(false)} className="block text-slate-700 font-medium">Programs</a>
               <a href="#press" onClick={() => setMenuOpen(false)} className="block text-slate-700 font-medium">Press</a>
               <a href="#contact" onClick={() => setMenuOpen(false)} className="block text-slate-700 font-medium">Contact</a>
             </div>
@@ -115,10 +113,9 @@ function Hero() {
               Saving Lives.<br />One Breath at a Time.
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed mb-8">
-              <span className="block text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded mb-2 w-fit">[PLACEHOLDER: Review hero copy]</span>
-              Lung cancer is the #1 cancer killer—but it doesn't have to be. 
-              Early detection can mean the difference between a 6% survival rate 
-              and a 60% one. We're here to close that gap.
+              Lung cancer is the #1 cancer killer—but it doesn&apos;t have to be.
+              Early detection can mean the difference between a 6% survival rate
+              and a 60% one. We&apos;re here to close that gap.
             </p>
             <div className="flex flex-wrap gap-4">
               <a 
@@ -406,28 +403,6 @@ function Press() {
   )
 }
 
-// Programs
-function Programs() {
-  return (
-    <section id="programs" className="py-20 lg:py-28 bg-cream">
-      <div className="max-w-7xl mx-auto px-6">
-        <FadeIn className="text-center">
-          <p className="text-brand font-semibold text-sm uppercase tracking-wider mb-4">Our Programs</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-8">
-            Coming Soon
-          </h2>
-          <div className="bg-amber-50 border-2 border-dashed border-amber-300 rounded-lg p-12 max-w-2xl mx-auto">
-            <p className="text-amber-800 font-medium mb-2">[PLACEHOLDER: Programs Section]</p>
-            <p className="text-slate-600">
-              Program details to be added once finalized.
-            </p>
-          </div>
-        </FadeIn>
-      </div>
-    </section>
-  )
-}
-
 // Donate
 function Donate() {
   const [amount, setAmount] = useState(100)
@@ -532,18 +507,17 @@ function Contact() {
           <p className="text-lg text-slate-600 mb-8">
             For press inquiries, partnership opportunities, or general questions.
           </p>
-          
-            <span className="block text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded mb-4 w-fit">[PLACEHOLDER: Add real contact emails]</span>
+
             <div className="space-y-4">
               <div>
                 <p className="font-semibold text-slate-900">General Inquiries</p>
-                <a href="mailto:info@lungcancerawareness.org" className="text-brand hover:underline">
+                <a href="mailto:info@lungcancerawarenessfoundation.org" className="text-brand hover:underline">
                   info@lungcancerawarenessfoundation.org
                 </a>
               </div>
               <div>
                 <p className="font-semibold text-slate-900">Media</p>
-                <a href="mailto:press@lungcancerawareness.org" className="text-brand hover:underline">
+                <a href="mailto:press@lungcancerawarenessfoundation.org" className="text-brand hover:underline">
                   press@lungcancerawarenessfoundation.org
                 </a>
               </div>
@@ -582,7 +556,6 @@ function Footer() {
               <li><a href="#founder" className="hover:text-white transition-colors">Our Founder</a></li>
               <li><a href="#about" className="hover:text-white transition-colors">About</a></li>
               <li><a href="#mission" className="hover:text-white transition-colors">Mission</a></li>
-              <li><a href="#programs" className="hover:text-white transition-colors">Programs</a></li>
               <li><a href="#press" className="hover:text-white transition-colors">Press</a></li>
             </ul>
           </div>
@@ -622,7 +595,6 @@ function App() {
       <About />
       <Mission />
       <Press />
-      <Programs />
       <Donate />
       <Contact />
       <Footer />
