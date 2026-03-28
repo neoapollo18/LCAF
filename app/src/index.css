@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand colors from logo */
-  --color-brand: #00B4B4;
-  --color-brand-dark: #009494;
-  --color-brand-light: #7FEFEF;
-  
-  /* Neutrals */
-  --color-cream: #F7F9F9;
+  --color-brand: #008b8b;
+  --color-brand-dark: #006f6f;
+  --color-brand-light: #5eead4;
+
+  --color-navy: #0a1628;
+  --color-navy-mid: #0f2847;
+
+  --color-cream: #f7f9f9;
   --color-slate-50: #f8fafc;
   --color-slate-100: #f1f5f9;
   --color-slate-200: #e2e8f0;
@@ -18,9 +19,8 @@
   --color-slate-700: #334155;
   --color-slate-800: #1e293b;
   --color-slate-900: #0f172a;
-  
-  /* Typography */
-  --font-serif: "Playfair Display", Georgia, serif;
+
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-display: "Outfit", system-ui, sans-serif;
   --font-body: "DM Sans", system-ui, sans-serif;
 }
@@ -29,43 +29,64 @@
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #334155;
-    background: white;
+    background: transparent;
+    font-size: 17px;
+    line-height: 1.65;
   }
 }
 
 ::selection {
-  background: #00B4B4;
+  background: #008b8b;
   color: white;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #e2e8f0;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #00B4B4;
+  background: #94a3b8;
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #009494;
+  background: #008b8b;
 }
 
-/* Focus styles */
+@layer components {
+  /* Editorial body copy on light */
+  .lcaf-prose {
+    @apply text-[17px] text-slate-600 leading-relaxed space-y-5;
+  }
+
+  /* White surface — report / annual-review tone */
+  .lcaf-panel {
+    @apply bg-white border border-slate-200 shadow-sm;
+  }
+
+  .lcaf-card {
+    @apply bg-white border border-slate-200 shadow-sm p-6 sm:p-8 transition-colors duration-200 hover:border-slate-300;
+  }
+
+  .lcaf-rule {
+    @apply h-px w-12 bg-brand shrink-0;
+  }
+}
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #00B4B4;
+  outline: 2px solid #008b8b;
   outline-offset: 2px;
 }
