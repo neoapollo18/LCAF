@@ -17,10 +17,16 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', varian
           {eyebrow}
         </p>
       )}
-      <h1 className={`font-serif text-3xl sm:text-4xl md:text-[2.65rem] ${titleCls} leading-[1.15] tracking-tight`}>
-        {title}
-      </h1>
-      {subtitle && <p className={`mt-4 text-lg ${subCls} leading-relaxed max-w-2xl ${align === 'center' ? 'mx-auto' : ''}`}>{subtitle}</p>}
+      {title && (
+        <h1 className={`font-serif text-3xl sm:text-4xl md:text-[2.65rem] ${titleCls} leading-[1.15] tracking-tight`}>
+          {title}
+        </h1>
+      )}
+      {subtitle && (
+        <p className={`mt-4 text-lg ${subCls} leading-relaxed max-w-2xl ${align === 'center' ? 'mx-auto' : ''}`}>
+          {subtitle}
+        </p>
+      )}
     </header>
   )
 }

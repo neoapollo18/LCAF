@@ -6,8 +6,8 @@ import { PageBackdrop } from './PageBackdrop'
 const navLinkClass = ({ isActive }) =>
   `text-[10px] xl:text-[11px] font-display font-bold uppercase tracking-[0.16em] transition-colors py-2 border-b-2 ${
     isActive
-      ? 'text-navy border-brand'
-      : 'text-slate-600 border-transparent hover:text-navy hover:border-slate-300'
+      ? 'text-white border-brand'
+      : 'text-slate-400 border-transparent hover:text-white hover:border-slate-600'
   }`
 
 export function Layout() {
@@ -32,17 +32,17 @@ export function Layout() {
   const closeMenu = () => setMenuOpen(false)
 
   return (
-    <div className="font-body antialiased min-h-screen flex flex-col text-slate-700">
+    <div className="font-body antialiased min-h-screen flex flex-col text-slate-300">
       <PageBackdrop />
 
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 border-b transition-shadow duration-200 ${
-          scrolled ? 'bg-white/95 shadow-sm border-slate-200' : 'bg-white/90 border-slate-200/80'
+        className={`fixed top-0 left-0 right-0 z-50 border-b border-slate-800 transition-shadow duration-200 ${
+          scrolled ? 'bg-navy/95 shadow-lg shadow-black/20' : 'bg-navy/90'
         } backdrop-blur-sm`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between gap-4 h-[4.25rem] sm:h-20">
-            <BrandMark theme="light" />
+            <BrandMark />
 
             <div className="hidden lg:flex items-end gap-5 xl:gap-7 flex-wrap justify-end flex-1 min-w-0 pb-0.5">
               <NavLink to="/about" className={navLinkClass}>
@@ -53,6 +53,9 @@ export function Layout() {
               </NavLink>
               <NavLink to="/mission" className={navLinkClass}>
                 OUR MISSION
+              </NavLink>
+              <NavLink to="/work" className={navLinkClass}>
+                OUR WORK
               </NavLink>
               <NavLink to="/press" className={navLinkClass}>
                 PRESS
@@ -72,26 +75,27 @@ export function Layout() {
               <button
                 type="button"
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="lg:hidden p-2.5 rounded-sm text-navy hover:bg-slate-100"
+                className="lg:hidden p-2.5 rounded-sm text-white hover:bg-white/10"
                 aria-expanded={menuOpen}
                 aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               >
                 <span className="block space-y-1.5 w-6">
-                  <span className="block h-0.5 w-full bg-navy rounded-full" />
-                  <span className="block h-0.5 w-full bg-navy rounded-full" />
-                  <span className="block h-0.5 w-full bg-navy rounded-full" />
+                  <span className="block h-0.5 w-full bg-white rounded-full" />
+                  <span className="block h-0.5 w-full bg-white rounded-full" />
+                  <span className="block h-0.5 w-full bg-white rounded-full" />
                 </span>
               </button>
             </div>
           </div>
 
           {menuOpen && (
-            <div className="lg:hidden pb-5 border-t border-slate-200 bg-white">
+            <div className="lg:hidden pb-5 border-t border-slate-800 bg-navy">
               <div className="pt-2 flex flex-col">
                 {[
                   ['/about', 'ABOUT US'],
                   ['/founder', 'OUR FOUNDER'],
                   ['/mission', 'OUR MISSION'],
+                  ['/work', 'OUR WORK'],
                   ['/press', 'PRESS'],
                   ['/contact', 'CONTACT US'],
                 ].map(([path, label]) => (
@@ -100,8 +104,8 @@ export function Layout() {
                     to={path}
                     onClick={closeMenu}
                     className={({ isActive }) =>
-                      `py-3.5 text-sm font-display font-semibold uppercase tracking-[0.12em] border-b border-slate-100 ${
-                        isActive ? 'text-brand' : 'text-slate-700'
+                      `py-3.5 text-sm font-display font-semibold uppercase tracking-[0.12em] border-b border-slate-800 ${
+                        isActive ? 'text-brand-light' : 'text-slate-300'
                       }`
                     }
                   >
@@ -122,7 +126,7 @@ export function Layout() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div className="md:col-span-2 space-y-5">
-              <BrandMark theme="dark" />
+              <BrandMark compact />
               <p className="text-slate-400 text-sm leading-relaxed max-w-md mt-4">
                 The Lung Cancer Awareness Foundation is a qualified 501(c)(3) tax-exempt organization. Tax ID Number:
                 33-4280122.
@@ -138,6 +142,7 @@ export function Layout() {
                   ['About Us', '/about'],
                   ['Our Founder', '/founder'],
                   ['Our Mission', '/mission'],
+                  ['Our Work', '/work'],
                   ['Press', '/press'],
                 ].map(([label, path]) => (
                   <li key={path}>
@@ -154,7 +159,7 @@ export function Layout() {
               <ul className="space-y-3 text-sm text-slate-400">
                 <li>
                   <Link to="/contact" className="hover:text-white transition-colors">
-                    Contact
+                    Contact Us
                   </Link>
                 </li>
                 <li>

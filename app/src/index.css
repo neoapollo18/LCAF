@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand: #008b8b;
-  --color-brand-dark: #006f6f;
-  --color-brand-light: #5eead4;
+  /* Logo “LUNG CANCER” blue — replaces former turquoise accent */
+  --color-brand: #3568b8;
+  --color-brand-dark: #2a528f;
+  --color-brand-light: #8eb4e8;
 
   --color-navy: #0a1628;
   --color-navy-mid: #0f2847;
@@ -34,7 +35,7 @@
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #334155;
+    color: #cbd5e1;
     background: transparent;
     font-size: 17px;
     line-height: 1.65;
@@ -42,7 +43,7 @@
 }
 
 ::selection {
-  background: #008b8b;
+  background: var(--color-brand);
   color: white;
 }
 
@@ -51,16 +52,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #e2e8f0;
+  background: #0f2847;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #94a3b8;
+  background: #334155;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #008b8b;
+  background: var(--color-brand);
 }
 
 @layer components {
@@ -81,12 +82,17 @@
   .lcaf-rule {
     @apply h-px w-12 bg-brand shrink-0;
   }
+
+  /* Body copy on navy page areas (cards/panels still use .lcaf-prose) */
+  .lcaf-prose-dark {
+    @apply text-[17px] text-slate-300 leading-relaxed space-y-5;
+  }
 }
 
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #008b8b;
+  outline: 2px solid var(--color-brand);
   outline-offset: 2px;
 }

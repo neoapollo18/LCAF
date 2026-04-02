@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import { FadeIn } from '../components/FadeIn'
-import { SectionHeader } from '../components/SectionHeader'
+
+const COMMITMENTS = [
+  'Expanding public education around lung health and risk awareness',
+  'Promoting early detection and proactive screening initiatives',
+  'Funding and supporting innovative lung cancer research',
+  'Reducing stigma through informed public dialogue',
+  'Partnering with medical and research institutions to advance equitable care',
+]
 
 export function Donate() {
   const [amount, setAmount] = useState(100)
@@ -13,45 +20,45 @@ export function Donate() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-14 lg:gap-16 items-start">
           <FadeIn>
-            <SectionHeader
-              eyebrow="Donate"
-              title="Support Our Work"
-              subtitle="Your gift fuels education, screening awareness, research, and support for patients and families."
-            />
-            <div className="lcaf-prose max-w-none">
+            <p className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-light mb-4">
+              <span className="lcaf-rule" aria-hidden />
+              Donate
+            </p>
+            <h1 className="font-display font-bold text-white text-lg sm:text-xl tracking-[0.14em] uppercase mb-8">
+              Support Our Work
+            </h1>
+
+            <div className="lcaf-prose-dark max-w-none">
               <p>
-                Lung cancer remains one of the most urgent public health challenges worldwide. Late detection, stigma,
-                and unequal access to care continue to affect outcomes.
+                Lung cancer remains one of the most urgent public health challenges worldwide. Despite advances in
+                medicine, late detection, stigma, and unequal access to care continue to affect outcomes.
               </p>
-              <p className="text-navy font-semibold">With donor support, we are committed to:</p>
-              <ul className="space-y-2 list-none pl-0 !mt-3">
-                {[
-                  'Expanding public education around lung health and risk awareness',
-                  'Promoting early detection and proactive screening initiatives',
-                  'Funding and supporting innovative lung cancer research',
-                  'Reducing stigma through informed public dialogue',
-                  'Partnering with medical and research institutions to advance equitable care',
-                ].map((t) => (
-                  <li key={t} className="flex gap-3 items-start">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-brand shrink-0" aria-hidden />
+              <p>
+                The Lung Cancer Awareness Foundation was established to address these challenges through a comprehensive
+                approach that includes education, early detection advocacy, patient support, and research investment.
+              </p>
+              <p className="text-white font-semibold !mb-3">With donor support, we are committed to:</p>
+              <ul className="space-y-2 list-none pl-0 !mt-0 !mb-6">
+                {COMMITMENTS.map((t) => (
+                  <li key={t} className="flex gap-2 items-start text-slate-300">
+                    <span className="shrink-0 font-sans" aria-hidden>
+                      •
+                    </span>
                     <span>{t}</span>
                   </li>
                 ))}
               </ul>
-              <p>Every contribution helps turn awareness into action.</p>
-              <p className="text-navy font-semibold !mb-0">We are saving lives — one breath at a time.</p>
+              <p>Every contribution fuels measurable progress.</p>
+              <p>Together, we are not only raising awareness. We are advancing solutions.</p>
+              <p className="text-white font-semibold !mb-0">We are saving lives — one breath at a time.</p>
             </div>
+
             <div className="mt-8 lcaf-panel p-5">
               <p className="text-sm text-slate-600 leading-relaxed">
                 The Lung Cancer Awareness Foundation is a qualified 501(c)(3) tax-exempt organization. Tax ID Number:
                 33-4280122.
               </p>
             </div>
-            <p className="text-sm text-slate-500 mt-6 border-l-4 border-slate-200 pl-4 leading-relaxed">
-              <span className="font-semibold text-slate-700">How giving works:</span> This form previews your donation
-              experience. Connecting a payment processor (e.g. Stripe or PayPal) to your bank account enables secure
-              online gifts. Until then, this button signals intent — we&apos;ll follow up with next steps.
-            </p>
           </FadeIn>
 
           <FadeIn delay={120}>
@@ -84,7 +91,7 @@ export function Donate() {
               </div>
 
               {frequency === 'monthly' && (
-                <p className="text-sm text-slate-600 mb-6 -mt-2">Sustaining gifts help us plan programs year-round.</p>
+                <p className="text-sm text-slate-600 mb-6 -mt-2">Become a monthly donor and make a continuous impact.</p>
               )}
 
               <p className="text-[11px] font-display font-semibold uppercase tracking-wider text-slate-500 mb-3">
@@ -131,7 +138,7 @@ export function Donate() {
                 {frequency === 'monthly' ? `Give $${amount}${labelSuffix}` : `Donate $${amount}`}
               </button>
 
-              <p className="text-center text-xs text-slate-500 mt-4">Secure payment · Tax-deductible</p>
+              <p className="text-center text-xs text-slate-500 mt-4">Tax-deductible to the extent allowed by law.</p>
             </div>
           </FadeIn>
         </div>

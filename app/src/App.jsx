@@ -7,6 +7,7 @@ import { Mission } from './pages/Mission'
 import { Press } from './pages/Press'
 import { Contact } from './pages/Contact'
 import { Donate } from './pages/Donate'
+import { Work } from './pages/Work'
 
 export default function App() {
   return (
@@ -16,10 +17,10 @@ export default function App() {
         <Route path="about" element={<About />} />
         <Route path="founder" element={<Founder />} />
         <Route path="mission" element={<Mission />} />
+        <Route path="work" element={<Work />} />
         <Route path="press" element={<Press />} />
         <Route path="contact" element={<Contact />} />
         <Route path="donate" element={<Donate />} />
-        <Route path="work" element={<Navigate to="/" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

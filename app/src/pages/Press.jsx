@@ -28,27 +28,11 @@ export function Press() {
     <section className="py-16 lg:py-24">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <SectionHeader
+          variant="dark"
           eyebrow="Press"
           title="In the News"
           subtitle="Recent coverage featuring Dionne Harmon and the Lung Cancer Awareness Foundation."
         />
-
-        <FadeIn className="mb-14">
-          <figure className="lcaf-panel overflow-hidden bg-white">
-            <img
-              src="/editorial-story.png"
-              alt="Press coverage: advocacy around screening, medical imaging highlighting lung findings, and founder Dionne Harmon."
-              className="w-full h-auto object-cover"
-            />
-            <figcaption className="px-5 py-4 text-sm text-slate-600 leading-relaxed border-t border-slate-200 bg-slate-50">
-              Coverage on early detection and Dionne Harmon&apos;s journey —{' '}
-              <a href={PEOPLE_URL} target="_blank" rel="noopener noreferrer" className="text-brand font-semibold hover:underline">
-                People
-              </a>
-              .
-            </figcaption>
-          </figure>
-        </FadeIn>
 
         <ul className="space-y-4 max-w-4xl mx-auto">
           {items.map((item, i) => (

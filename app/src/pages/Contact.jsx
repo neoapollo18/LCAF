@@ -14,31 +14,31 @@ export function Contact() {
   return (
     <section className="py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <SectionHeader
-          eyebrow="Contact"
-          title="Contact Us"
-          subtitle="For general questions, partnership opportunities, or press inquiries."
-        />
+        <SectionHeader variant="dark" eyebrow="Contact Us" />
 
         <div className="grid md:grid-cols-3 gap-6">
           <FadeIn>
             <ContactCard title="General Questions & Partnership Opportunities">
-              <a
-                href="mailto:info@lungcancerawarenessfoundation.org"
-                className="text-brand font-semibold hover:underline break-all"
-              >
-                info@lungcancerawarenessfoundation.org
-              </a>
+              <div className="min-w-0 overflow-x-auto">
+                <a
+                  href="mailto:info@lungcancerawarenessfoundation.org"
+                  className="text-brand font-semibold hover:underline whitespace-nowrap inline-block"
+                >
+                  info@lungcancerawarenessfoundation.org
+                </a>
+              </div>
             </ContactCard>
           </FadeIn>
           <FadeIn delay={70}>
             <ContactCard title="Media">
-              <a
-                href="mailto:press@lungcancerawarenessfoundation.org"
-                className="text-brand font-semibold hover:underline break-all"
-              >
-                press@lungcancerawarenessfoundation.org
-              </a>
+              <div className="min-w-0 overflow-x-auto">
+                <a
+                  href="mailto:press@lungcancerawarenessfoundation.org"
+                  className="text-brand font-semibold hover:underline whitespace-nowrap inline-block"
+                >
+                  press@lungcancerawarenessfoundation.org
+                </a>
+              </div>
             </ContactCard>
           </FadeIn>
           <FadeIn delay={140}>
