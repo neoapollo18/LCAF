@@ -47,20 +47,26 @@
   color: white;
 }
 
-::-webkit-scrollbar {
+/* Only the page scrollbars — avoid styling nested overflow (e.g. contact cards) */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
-::-webkit-scrollbar-track {
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
   background: #0f2847;
 }
 
-::-webkit-scrollbar-thumb {
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
   background: #334155;
   border-radius: 999px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand);
 }
 

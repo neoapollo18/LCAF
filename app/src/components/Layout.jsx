@@ -167,19 +167,6 @@ export function Layout() {
                     Donate
                   </Link>
                 </li>
-                <li>
-                  <a
-                    href="https://www.instagram.com/lungcancerawarenessfoundation/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
-                  >
-                    Instagram
-                  </a>
-                </li>
-                <li>
-                  <span className="text-slate-600">LinkedIn — coming soon</span>
-                </li>
               </ul>
             </div>
           </div>
