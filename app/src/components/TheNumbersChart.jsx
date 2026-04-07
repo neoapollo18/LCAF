@@ -38,7 +38,7 @@ export function TheNumbersChart({ className = '' }) {
               >
                 <div
                   className={`h-full rounded-full transition-[width] duration-500 ease-out ${
-                    row.highlight ? 'bg-slate-500' : 'bg-slate-400'
+                    row.highlight ? 'bg-brand' : 'bg-slate-400'
                   }`}
                   style={{ width: `${pct}%` }}
                 />

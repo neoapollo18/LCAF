@@ -1,11 +1,10 @@
 import { FadeIn } from '../components/FadeIn'
-import { SectionHeader } from '../components/SectionHeader'
 
 export function About() {
   return (
     <section className="py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <SectionHeader eyebrow="About Us" variant="dark" />
+        <h1 className="lcaf-page-title">About Us</h1>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <FadeIn>
@@ -35,7 +34,7 @@ export function About() {
           </FadeIn>
 
           <FadeIn delay={150}>
-            <figure className="lcaf-panel p-8 lg:p-10 border-l-4 border-l-brand">
+            <figure className="rounded-sm border border-slate-200/90 bg-slate-100 p-8 lg:p-10 shadow-sm border-l-4 border-l-brand">
               <span className="font-serif text-6xl text-brand/30 leading-none block mb-2" aria-hidden>
                 &ldquo;
               </span>
@@ -45,7 +44,7 @@ export function About() {
                   awareness, advancing research, and strengthening support at every stage of the journey.
                 </p>
               </blockquote>
-              <div className="mt-8 pt-6 border-t border-slate-200" aria-hidden />
+              <div className="mt-8 pt-6 border-t border-slate-300/80" aria-hidden />
             </figure>
           </FadeIn>
         </div>

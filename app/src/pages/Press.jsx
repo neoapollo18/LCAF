@@ -1,5 +1,4 @@
 import { FadeIn } from '../components/FadeIn'
-import { SectionHeader } from '../components/SectionHeader'
 
 const PEOPLE_URL =
   'https://people.com/emmy-producer-stage-3-cancer-kim-kardashian-prenuvo-exclusive-11811600'
@@ -27,12 +26,10 @@ export function Press() {
   return (
     <section className="py-16 lg:py-24">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <SectionHeader
-          variant="dark"
-          eyebrow="Press"
-          title="In the News"
-          subtitle="Recent coverage featuring Dionne Harmon and the Lung Cancer Awareness Foundation."
-        />
+        <h1 className="lcaf-page-title">In the News</h1>
+        <p className="text-slate-400 text-lg -mt-4 mb-10 max-w-2xl">
+          Recent coverage featuring Dionne Harmon and the Lung Cancer Awareness Foundation.
+        </p>
 
         <ul className="space-y-4 max-w-4xl mx-auto">
           {items.map((item, i) => (
@@ -42,9 +39,9 @@ export function Press() {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="lcaf-card flex flex-col sm:flex-row sm:items-start gap-4 !p-6 sm:!p-6 group rounded-sm"
+                  className="lcaf-card-muted flex flex-col sm:flex-row sm:items-start gap-4 !p-6 sm:!p-6 group rounded-sm"
                 >
-                  <span className="shrink-0 inline-flex items-center justify-center rounded-sm bg-slate-100 text-navy font-display text-[10px] font-bold uppercase tracking-wider px-3 py-2 border border-slate-200">
+                  <span className="shrink-0 inline-flex items-center justify-center rounded-sm bg-white/80 text-navy font-display text-[10px] font-bold uppercase tracking-wider px-3 py-2 border border-slate-200/90">
                     {item.outlet}
                   </span>
                   <span className="flex-1 min-w-0">

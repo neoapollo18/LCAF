@@ -20,13 +20,7 @@ export function Donate() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-14 lg:gap-16 items-start">
           <FadeIn>
-            <p className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-light mb-4">
-              <span className="lcaf-rule" aria-hidden />
-              Donate
-            </p>
-            <h1 className="font-display font-bold text-white text-lg sm:text-xl tracking-[0.14em] uppercase mb-8">
-              Support Our Work
-            </h1>
+            <h1 className="lcaf-page-title !mb-8">Support Our Work</h1>
 
             <div className="lcaf-prose-dark max-w-none">
               <p>
@@ -53,7 +47,7 @@ export function Donate() {
               <p className="text-white font-semibold !mb-0">We are saving lives — one breath at a time.</p>
             </div>
 
-            <div className="mt-8 lcaf-panel p-5">
+            <div className="mt-8 rounded-sm border border-slate-200/90 bg-slate-100 p-5 shadow-sm">
               <p className="text-sm text-slate-600 leading-relaxed">
                 The Lung Cancer Awareness Foundation is a qualified 501(c)(3) tax-exempt organization. Tax ID Number:
                 33-4280122.
@@ -62,13 +56,13 @@ export function Donate() {
           </FadeIn>
 
           <FadeIn delay={120}>
-            <div className="lcaf-panel p-8 lg:p-10 lg:sticky lg:top-28 rounded-sm">
+            <div className="rounded-sm border border-slate-200/90 bg-slate-100 p-8 lg:p-10 lg:sticky lg:top-28 shadow-sm">
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-8">
                 <div>
                   <h2 className="font-serif text-2xl text-navy">Make a Gift</h2>
                   <p className="text-sm text-slate-500 mt-1">One-time or monthly</p>
                 </div>
-                <div className="flex rounded-sm border border-slate-200 p-1 bg-slate-50" role="group" aria-label="Donation frequency">
+                <div className="flex rounded-sm border border-slate-200 p-1 bg-white/80" role="group" aria-label="Donation frequency">
                   <button
                     type="button"
                     onClick={() => setFrequency('once')}

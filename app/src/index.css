@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  /* Logo “LUNG CANCER” blue — replaces former turquoise accent */
-  --color-brand: #3568b8;
-  --color-brand-dark: #2a528f;
-  --color-brand-light: #8eb4e8;
+  /* Accent — foundation cyan */
+  --color-brand: #00bbe6;
+  --color-brand-dark: #0099c4;
+  --color-brand-light: #7dd3fc;
 
   --color-navy: #0a1628;
   --color-navy-mid: #0f2847;
@@ -71,12 +71,10 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 @layer components {
-  /* Editorial body copy on light */
   .lcaf-prose {
     @apply text-[17px] text-slate-600 leading-relaxed space-y-5;
   }
 
-  /* White surface — report / annual-review tone */
   .lcaf-panel {
     @apply bg-white border border-slate-200 shadow-sm;
   }
@@ -85,13 +83,22 @@ body::-webkit-scrollbar-thumb:hover {
     @apply bg-white border border-slate-200 shadow-sm p-6 sm:p-8 transition-colors duration-200 hover:border-slate-300;
   }
 
+  /* Muted surface — matches numbers chart / request for softer cards */
+  .lcaf-card-muted {
+    @apply bg-slate-100 border border-slate-200/90 shadow-sm p-6 sm:p-8 transition-colors duration-200 hover:border-slate-300/90;
+  }
+
   .lcaf-rule {
     @apply h-px w-12 bg-brand shrink-0;
   }
 
-  /* Body copy on navy page areas (cards/panels still use .lcaf-prose) */
   .lcaf-prose-dark {
     @apply text-[17px] text-slate-300 leading-relaxed space-y-5;
+  }
+
+  /* Shared white page title on navy */
+  .lcaf-page-title {
+    @apply font-serif text-3xl sm:text-4xl md:text-[2.65rem] text-white leading-[1.15] tracking-tight mb-8 md:mb-10;
   }
 }
 
