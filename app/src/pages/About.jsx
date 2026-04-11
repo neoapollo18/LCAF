@@ -10,8 +10,9 @@ export function About() {
           <FadeIn>
             <div className="lcaf-prose-dark max-w-none">
               <p>
-                The Lung Cancer Awareness Foundation is dedicated to improving outcomes for individuals and families
-                affected by lung cancer through education, early detection, research, advocacy, and support.
+                The <span className="lcaf-foundation-name">Lung Cancer Awareness Foundation</span> is dedicated to
+                improving outcomes for individuals and families affected by lung cancer through education, early
+                detection, research, advocacy, and support.
               </p>
               <p>
                 Founded by Dionne Harmon following her own lung cancer diagnosis, the foundation was created to address

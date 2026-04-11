@@ -6,6 +6,9 @@
   --color-brand-dark: #0099c4;
   --color-brand-light: #7dd3fc;
 
+  /* Name highlight — cyan-blue (editorial accent for “Lung Cancer Awareness Foundation”) */
+  --color-foundation-accent: #33a8c7;
+
   --color-navy: #0a1628;
   --color-navy-mid: #0f2847;
 
@@ -99,6 +102,10 @@ body::-webkit-scrollbar-thumb:hover {
   /* Shared white page title on navy */
   .lcaf-page-title {
     @apply font-serif text-3xl sm:text-4xl md:text-[2.65rem] text-white leading-[1.15] tracking-tight mb-8 md:mb-10;
+  }
+
+  .lcaf-foundation-name {
+    color: var(--color-foundation-accent);
   }
 }
 

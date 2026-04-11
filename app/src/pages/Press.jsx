@@ -5,6 +5,11 @@ const PEOPLE_URL =
 
 const items = [
   {
+    outlet: 'USC Health Magazine',
+    title: 'Lung Cancer Care After Surprising MRI',
+    url: 'https://www.keckmedicine.org/magazine/lung-cancer-surprising-mri/',
+  },
+  {
     outlet: 'KTLA',
     title: 'Cancer Mystery in Non-Smoking Women',
     url: 'https://ktla.com/video/cancer-mystery-in-non-smoking-women/11445904/',

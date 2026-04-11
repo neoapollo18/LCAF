@@ -9,9 +9,10 @@ export function Mission() {
         <FadeIn className="mb-14 md:mb-16 max-w-3xl mx-auto">
           <div className="lcaf-prose-dark text-left md:text-center max-w-none md:max-w-3xl mx-auto !space-y-5">
             <p>
-              The Lung Cancer Awareness Foundation is committed to expanding education, accelerating research, promoting
-              early detection, and strengthening support systems for those impacted by lung cancer. We work to ensure that
-              scientific advancement, public awareness, and patient advocacy move forward together.
+              The <span className="lcaf-foundation-name">Lung Cancer Awareness Foundation</span> is committed to expanding
+              education, accelerating research, promoting early detection, and strengthening support systems for those
+              impacted by lung cancer. We work to ensure that scientific advancement, public awareness, and patient
+              advocacy move forward together.
             </p>
             <p>
               We envision a future where lung cancer is detected earlier, researched more deeply, discussed openly, and

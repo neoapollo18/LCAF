@@ -44,8 +44,11 @@ export function Home() {
               <div className="lcaf-prose-dark max-w-xl">
                 <p>
                   Lung cancer remains the leading cause of cancer death in the United States. Raising awareness,
-                  promoting early detection, and supporting research are critical to improving outcomes and saving
-                  lives. The Lung Cancer Awareness Foundation was created to help drive that work forward.
+                  promoting early detection, and supporting research are critical to improving outcomes and saving lives.
+                </p>
+                <p>
+                  The <span className="lcaf-foundation-name">Lung Cancer Awareness Foundation</span> was created to help
+                  drive that work forward.
                 </p>
                 <p className="!mb-0">
                   With every effort, partnership, and contribution, we move closer to a future where more lives are saved,

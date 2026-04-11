@@ -25,8 +25,9 @@ export function Founder() {
               <p>
                 Dionne Harmon has spent her career helping to bring impactful stories to life. As an Emmy-winning
                 television producer and president of Jesse Collins Entertainment, she has worked behind the scenes on
-                major cultural moments, leading teams with vision, focus, and integrity. Her professional journey has
-                always been guided by purpose and the belief that meaningful work requires both artistry and responsibility.
+                major cultural moments, broken glass ceilings, and led teams with vision, focus, and integrity. Her
+                professional journey has always been guided by the belief that meaningful work requires both artistry and
+                responsibility.
               </p>
               <p>
                 That sense of responsibility took on new meaning when Dionne was diagnosed with stage 3 lung cancer.
@@ -38,7 +39,10 @@ export function Founder() {
                 conversations, greater access to resources, and increased investment in research to improve detection,
                 treatment, and outcomes.
               </p>
-              <p>The Lung Cancer Awareness Foundation was born from that life-changing experience.</p>
+              <p>
+                The <span className="lcaf-foundation-name">Lung Cancer Awareness Foundation</span> was born from that
+                life-changing experience.
+              </p>
               <p>
                 What began as a deeply personal challenge evolved into a commitment to help others navigate theirs. For
                 Dionne, this work is not about recognition. It is about responsibility. It is about using her voice and

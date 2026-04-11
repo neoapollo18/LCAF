@@ -14,7 +14,7 @@ function MailtoLine({ email }) {
     <div className="min-w-0 overflow-x-auto overflow-y-hidden [scrollbar-width:thin]">
       <a
         href={`mailto:${email}`}
-        className="text-brand-light font-semibold hover:underline whitespace-nowrap inline-block max-w-none drop-shadow-sm"
+        className="text-navy font-semibold hover:underline whitespace-nowrap inline-block max-w-none"
       >
         {email}
       </a>
