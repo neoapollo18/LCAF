@@ -1,10 +1,6 @@
 {
-  "name": "lung-cancer-awareness-foundation-site",
   "private": true,
-  "scripts": {
-    "dev": "npm run dev --prefix app",
-    "build": "npm run build --prefix app",
-    "preview": "npm run preview --prefix app",
-    "lint": "npm run lint --prefix app"
+  "dependencies": {
+    "googleapis": "^144.0.0"
   }
 }

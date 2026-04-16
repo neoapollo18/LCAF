@@ -1,19 +1,27 @@
 /**
  * POST /api/contact
- * Body: { name, email, message, newsletter?, company? } — `company` is a honeypot; must be empty.
+ * Body: { name, email, message, newsletter?, company? } — `company` is honeypot; must be empty.
  *
- * Setup (Google Sheets):
- * 1. New Google Sheet. Row 1: Timestamp | Name | Email | Message | Newsletter
- * 2. Extensions → Apps Script → paste doPost from the comment block at the bottom → Deploy → Web app →
- *    Execute as: Me → Who has access: Anyone
- * 3. Copy Web app URL → Vercel env APPS_SCRIPT_WEBHOOK_URL → Redeploy
+ * --- Recommended: Google Sheets API (service account) ---
+ * No Apps Script “Anyone” / Workspace issues. Vercel talks to Sheets as a robot account.
+ *
+ * 1. Google Cloud Console → project → APIs & Services → Enable “Google Sheets API”.
+ * 2. IAM → Service Accounts → Create → Keys → Add JSON key. Download the JSON.
+ * 3. Open your Sheet → Share → paste the JSON’s `client_email` (…@….iam.gserviceaccount.com) as Editor.
+ * 4. Vercel env (Production):
+ *    - GOOGLE_SERVICE_ACCOUNT_JSON = entire JSON as one line (or paste in Vercel multiline field)
+ *    - GOOGLE_SHEET_ID = from the Sheet URL: …/d/SHEET_ID/edit
+ *    - GOOGLE_SHEET_RANGE = optional, default Sheet1!A:E
+ * 5. Redeploy. You can remove APPS_SCRIPT_WEBHOOK_URL once this works.
+ *
+ * --- Fallback: Apps Script Web App (APPS_SCRIPT_WEBHOOK_URL) ---
+ * Often blocked by Workspace / HTML login responses; service account is more reliable.
  */
 
 const MAX = { name: 500, email: 320, message: 10000 }
 
-/** Shown when Google serves a login/consent HTML page instead of running doPost (wrong Web app access). */
 const GOOGLE_APPS_SCRIPT_ACCESS_ERROR =
-  'Form backend is blocked by Google. In Apps Script: Deploy → Manage deployments → Edit (pencil) → set “Who has access” to Anyone (not “Anyone with a Google account”), save, then copy the new Web app URL into Vercel APPS_SCRIPT_WEBHOOK_URL and redeploy.'
+  'Google blocked the Apps Script URL (common with school/work accounts). Prefer Google Sheets API: set GOOGLE_SERVICE_ACCOUNT_JSON + GOOGLE_SHEET_ID in Vercel (see api/contact.js header).'
 
 function responseLooksLikeGoogleHtml(text) {
   if (!text || typeof text !== 'string') return false
@@ -52,15 +60,52 @@ function readJsonBody(req) {
   })
 }
 
+function parseServiceAccount() {
+  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON
+  if (!raw) return null
+  try {
+    const j = JSON.parse(raw)
+    if (!j.client_email || !j.private_key) return null
+    return {
+      client_email: j.client_email,
+      private_key: String(j.private_key).replace(/\\n/g, '\n'),
+    }
+  } catch {
+    return null
+  }
+}
+
+async function appendRowViaSheetsApi({ name, email, message, newsletter }) {
+  const { google } = require('googleapis')
+  const creds = parseServiceAccount()
+  const spreadsheetId = process.env.GOOGLE_SHEET_ID
+  if (!creds || !spreadsheetId) {
+    throw new Error('Missing GOOGLE_SERVICE_ACCOUNT_JSON or GOOGLE_SHEET_ID')
+  }
+
+  const auth = new google.auth.GoogleAuth({
+    credentials: creds,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  })
+
+  const sheets = google.sheets({ version: 'v4', auth })
+  const range = process.env.GOOGLE_SHEET_RANGE || 'Sheet1!A:E'
+
+  await sheets.spreadsheets.values.append({
+    spreadsheetId,
+    range,
+    valueInputOption: 'USER_ENTERED',
+    insertDataOption: 'INSERT_ROWS',
+    requestBody: {
+      values: [[new Date().toISOString(), name, email, message, newsletter ? 'yes' : 'no']],
+    },
+  })
+}
+
 module.exports = async function contactHandler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST')
     return res.status(405).json({ error: 'Method not allowed' })
-  }
-
-  const webhookUrl = process.env.APPS_SCRIPT_WEBHOOK_URL
-  if (!webhookUrl) {
-    return res.status(500).json({ error: 'Form is not configured yet' })
   }
 
   const body = await readJsonBody(req)
@@ -78,6 +123,29 @@ module.exports = async function contactHandler(req, res) {
     return res.status(400).json({ error: 'A valid email is required' })
   }
 
+  const useSheetsApi = Boolean(process.env.GOOGLE_SHEET_ID && parseServiceAccount())
+
+  if (useSheetsApi) {
+    try {
+      await appendRowViaSheetsApi({ name, email, message, newsletter })
+      return res.status(200).json({ ok: true })
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err)
+      return res.status(502).json({
+        error: 'Could not write to Google Sheet. Check sharing with the service account email and GOOGLE_SHEET_ID.',
+        detail: msg.slice(0, 250),
+      })
+    }
+  }
+
+  const webhookUrl = process.env.APPS_SCRIPT_WEBHOOK_URL
+  if (!webhookUrl) {
+    return res.status(500).json({
+      error:
+        'Form backend not configured. Add GOOGLE_SERVICE_ACCOUNT_JSON + GOOGLE_SHEET_ID (recommended), or APPS_SCRIPT_WEBHOOK_URL.',
+    })
+  }
+
   const payload = JSON.stringify({ name, email, message, newsletter })
 
   let upstream
@@ -90,19 +158,17 @@ module.exports = async function contactHandler(req, res) {
   const text = await upstream.text()
   const ct = upstream.headers.get('content-type') || ''
 
-  // Google often returns 403/401 + HTML login page, or 200 + HTML — never leak raw HTML to the UI
   if (responseLooksLikeGoogleHtml(text)) {
     return res.status(502).json({ error: GOOGLE_APPS_SCRIPT_ACCESS_ERROR })
   }
 
   if (!upstream.ok) {
     return res.status(502).json({
-      error: 'Could not save to the sheet (Google returned an error). Check Apps Script deployment access.',
+      error: 'Could not save via Apps Script. Prefer Google Sheets API (service account) in Vercel.',
       status: upstream.status,
     })
   }
 
-  // Apps Script returns 200 even for script errors in doPost catch — check JSON body
   if (ct.includes('application/json')) {
     try {
       const j = JSON.parse(text)
@@ -124,10 +190,6 @@ module.exports = async function contactHandler(req, res) {
   return res.status(200).json({ ok: true })
 }
 
-/**
- * Google often responds to /exec with 302. Fetch follows 302 with GET and drops the POST body.
- * We follow the Location manually and POST again.
- */
 async function postToAppsScript(webhookUrl, payload) {
   const headers = {
     'Content-Type': 'application/json',
@@ -158,29 +220,3 @@ async function postToAppsScript(webhookUrl, payload) {
 
   return res
 }
-
-/*
---- Google Apps Script (bound to your Sheet) — paste in Apps Script editor ---
-
-function doPost(e) {
-  try {
-    var data = JSON.parse(e.postData.contents);
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    sheet.appendRow([
-      new Date(),
-      data.name || '',
-      data.email || '',
-      data.message || '',
-      data.newsletter ? 'yes' : 'no'
-    ]);
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: true }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-*/
