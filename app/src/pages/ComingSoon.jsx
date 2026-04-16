@@ -6,21 +6,38 @@ const fieldClass =
 
 export function ComingSoon() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
+    setError(null)
     const form = e.currentTarget
     const fd = new FormData(form)
     const name = String(fd.get('name') ?? '').trim()
     const email = String(fd.get('email') ?? '').trim()
     const message = String(fd.get('message') ?? '').trim()
     const newsletter = fd.get('newsletter') === 'on'
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nEmail list signup: ${newsletter ? 'Yes' : 'No'}\n\nMessage:\n${message}`
-    )
-    const subject = encodeURIComponent('LCAF — Website contact')
-    window.location.href = `mailto:info@lungcancerawarenessfoundation.org?subject=${subject}&body=${body}`
-    setSubmitted(true)
+    const company = String(fd.get('company') ?? '').trim()
+
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message, newsletter, company }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        throw new Error(data.error || 'Something went wrong. Please try again.')
+      }
+      setSubmitted(true)
+      form.reset()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -43,7 +60,12 @@ export function ComingSoon() {
               <div className="lcaf-rule" aria-hidden />
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="relative space-y-5" noValidate>
+              {/* Honeypot — leave hidden; bots fill it and the API rejects */}
+              <div className="absolute -left-[9999px] opacity-0 pointer-events-none" aria-hidden="true">
+                <label htmlFor="cs-company">Company</label>
+                <input id="cs-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
               <div>
                 <label htmlFor="cs-name" className="sr-only">
                   Name
@@ -96,26 +118,26 @@ export function ComingSoon() {
                 </label>
               </div>
 
+              {error && (
+                <p className="text-sm text-red-400 text-center" role="alert">
+                  {error}
+                </p>
+              )}
+
               <div className="flex justify-center pt-2">
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center min-w-[9rem] bg-white text-navy text-sm font-display font-bold uppercase tracking-[0.14em] px-10 py-3.5 rounded-sm transition-colors hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  disabled={submitting}
+                  className="inline-flex items-center justify-center min-w-[9rem] bg-white text-navy text-sm font-display font-bold uppercase tracking-[0.14em] px-10 py-3.5 rounded-sm transition-colors hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  SEND
+                  {submitting ? 'Sending…' : 'SEND'}
                 </button>
               </div>
             </form>
 
             {submitted && (
-              <p className="mt-6 text-center text-sm text-slate-500" role="status">
-                If your email app didn&apos;t open, you can write us at{' '}
-                <a
-                  href="mailto:info@lungcancerawarenessfoundation.org"
-                  className="text-brand-light hover:text-brand underline underline-offset-2"
-                >
-                  info@lungcancerawarenessfoundation.org
-                </a>
-                .
+              <p className="mt-6 text-center text-sm text-slate-400" role="status">
+                Thank you — your message was received.
               </p>
             )}
 
