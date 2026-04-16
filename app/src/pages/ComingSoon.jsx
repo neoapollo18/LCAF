@@ -50,13 +50,16 @@ export function ComingSoon() {
     <section className="py-14 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <FadeIn>
-          <p className="font-display text-[10px] font-bold uppercase tracking-[0.2em] text-brand-light text-center mb-5">
-            Coming soon
-          </p>
-          <p className="font-serif text-lg sm:text-xl text-white/90 text-center max-w-2xl mx-auto leading-snug mb-12 lg:mb-14">
-            We&apos;re finishing the full Lung Cancer Awareness Foundation website. Until then, send us a message—we&apos;d
-            love to hear from you.
-          </p>
+          <div className="flex justify-center mb-12 lg:mb-14">
+            <img
+              src="/fulllogo_transparent.png"
+              alt="Lung Cancer Awareness Foundation"
+              className="w-full max-w-md sm:max-w-lg md:max-w-2xl h-auto object-contain object-center"
+              width={800}
+              height={200}
+              decoding="async"
+            />
+          </div>
         </FadeIn>
 
         <FadeIn delay={60}>
@@ -120,7 +123,7 @@ export function ComingSoon() {
                   className="mt-1 size-4 shrink-0 rounded-sm border border-slate-500/80 bg-transparent accent-brand"
                 />
                 <label htmlFor="cs-newsletter" className="text-sm text-slate-400 leading-snug cursor-pointer">
-                  Sign up for our email list for updates, promotions, and more.
+                  Sign up for our email list for updates and more.
                 </label>
               </div>
 
@@ -148,12 +151,12 @@ export function ComingSoon() {
             )}
 
             <p className="mt-10 text-center text-xs text-slate-500 leading-relaxed max-w-md mx-auto">
-              For press inquiries, contact{' '}
+              For more information, contact{' '}
               <a
                 href="mailto:press@lungcancerawarenessfoundation.org"
                 className="text-slate-400 hover:text-brand-light underline underline-offset-2"
               >
-                press@lungcancerawarenessfoundation.org
+                info@lungcancerawarenessfoundation.org
               </a>
               .
             </p>
