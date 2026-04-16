@@ -29,7 +29,9 @@ export function ComingSoon() {
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
-        throw new Error(data.error || 'Something went wrong. Please try again.')
+        const base = data.error || 'Something went wrong. Please try again.'
+        const extra = typeof data.detail === 'string' ? data.detail.trim().slice(0, 180) : ''
+        throw new Error(extra ? `${base} ${extra}` : base)
       }
       setSubmitted(true)
       form.reset()

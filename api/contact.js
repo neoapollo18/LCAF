@@ -66,21 +66,80 @@ module.exports = async function contactHandler(req, res) {
 
   let upstream
   try {
-    upstream = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload,
-    })
+    upstream = await postToAppsScript(webhookUrl.trim(), payload)
   } catch {
     return res.status(502).json({ error: 'Could not reach form handler' })
   }
 
   const text = await upstream.text()
+  const ct = upstream.headers.get('content-type') || ''
+
   if (!upstream.ok) {
-    return res.status(502).json({ error: 'Sheet handler failed', detail: text.slice(0, 200) })
+    return res.status(502).json({
+      error: 'Sheet handler failed',
+      status: upstream.status,
+      detail: text.slice(0, 400),
+    })
+  }
+
+  // Apps Script returns 200 even for script errors in doPost catch — check JSON body
+  if (ct.includes('application/json')) {
+    try {
+      const j = JSON.parse(text)
+      if (j && j.ok === false) {
+        return res.status(502).json({
+          error: 'Sheet script error',
+          detail: String(j.error || text).slice(0, 400),
+        })
+      }
+    } catch {
+      /* fall through */
+    }
+  }
+
+  if (text.includes('<!DOCTYPE') || text.includes('<html') || /sign in/i.test(text)) {
+    return res.status(502).json({
+      error: 'Google returned a web page instead of the script (check Web app deploy: Anyone)',
+      detail: text.slice(0, 200),
+    })
   }
 
   return res.status(200).json({ ok: true })
+}
+
+/**
+ * Google often responds to /exec with 302. Fetch follows 302 with GET and drops the POST body.
+ * We follow the Location manually and POST again.
+ */
+async function postToAppsScript(webhookUrl, payload) {
+  const headers = {
+    'Content-Type': 'application/json',
+    'User-Agent': 'LCAF-Contact/1.0',
+  }
+
+  let url = webhookUrl
+  let res = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: payload,
+    redirect: 'manual',
+  })
+
+  if ([301, 302, 303, 307, 308].includes(res.status)) {
+    await res.text().catch(() => {})
+    const loc = res.headers.get('location')
+    if (loc) {
+      url = new URL(loc, url).href
+      res = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: payload,
+        redirect: 'follow',
+      })
+    }
+  }
+
+  return res
 }
 
 /*
