@@ -11,6 +11,22 @@
 
 const MAX = { name: 500, email: 320, message: 10000 }
 
+/** Shown when Google serves a login/consent HTML page instead of running doPost (wrong Web app access). */
+const GOOGLE_APPS_SCRIPT_ACCESS_ERROR =
+  'Form backend is blocked by Google. In Apps Script: Deploy → Manage deployments → Edit (pencil) → set “Who has access” to Anyone (not “Anyone with a Google account”), save, then copy the new Web app URL into Vercel APPS_SCRIPT_WEBHOOK_URL and redeploy.'
+
+function responseLooksLikeGoogleHtml(text) {
+  if (!text || typeof text !== 'string') return false
+  const t = text.slice(0, 8000)
+  return (
+    /<!DOCTYPE\s+html/i.test(t) ||
+    /accounts\.google\.com/i.test(t) ||
+    /\/signin/i.test(t) ||
+    /Web word processing, presentations and spreadsheets/i.test(t) ||
+    (/googleusercontent\.com/i.test(t) && /<html/i.test(t))
+  )
+}
+
 function readJsonBody(req) {
   return new Promise((resolve, reject) => {
     if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) {
@@ -74,11 +90,15 @@ module.exports = async function contactHandler(req, res) {
   const text = await upstream.text()
   const ct = upstream.headers.get('content-type') || ''
 
+  // Google often returns 403/401 + HTML login page, or 200 + HTML — never leak raw HTML to the UI
+  if (responseLooksLikeGoogleHtml(text)) {
+    return res.status(502).json({ error: GOOGLE_APPS_SCRIPT_ACCESS_ERROR })
+  }
+
   if (!upstream.ok) {
     return res.status(502).json({
-      error: 'Sheet handler failed',
+      error: 'Could not save to the sheet (Google returned an error). Check Apps Script deployment access.',
       status: upstream.status,
-      detail: text.slice(0, 400),
     })
   }
 
@@ -89,7 +109,7 @@ module.exports = async function contactHandler(req, res) {
       if (j && j.ok === false) {
         return res.status(502).json({
           error: 'Sheet script error',
-          detail: String(j.error || text).slice(0, 400),
+          detail: String(j.error || 'unknown').slice(0, 400),
         })
       }
     } catch {
@@ -97,11 +117,8 @@ module.exports = async function contactHandler(req, res) {
     }
   }
 
-  if (text.includes('<!DOCTYPE') || text.includes('<html') || /sign in/i.test(text)) {
-    return res.status(502).json({
-      error: 'Google returned a web page instead of the script (check Web app deploy: Anyone)',
-      detail: text.slice(0, 200),
-    })
+  if (text.includes('<!DOCTYPE') || text.includes('<html')) {
+    return res.status(502).json({ error: GOOGLE_APPS_SCRIPT_ACCESS_ERROR })
   }
 
   return res.status(200).json({ ok: true })

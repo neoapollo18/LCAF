@@ -9,10 +9,12 @@ export function ComingSoon() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
-  async function handleSubmit(e) {
+  /** Sync handler only — async work in a void IIFE so the browser never performs a real form navigation (avoids blank tabs / reloads). */
+  function handleSubmit(e) {
     e.preventDefault()
-    setError(null)
     const form = e.currentTarget
+    setError(null)
+
     const fd = new FormData(form)
     const name = String(fd.get('name') ?? '').trim()
     const email = String(fd.get('email') ?? '').trim()
@@ -20,26 +22,28 @@ export function ComingSoon() {
     const newsletter = fd.get('newsletter') === 'on'
     const company = String(fd.get('company') ?? '').trim()
 
-    setSubmitting(true)
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message, newsletter, company }),
-      })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        const base = data.error || 'Something went wrong. Please try again.'
-        const extra = typeof data.detail === 'string' ? data.detail.trim().slice(0, 180) : ''
-        throw new Error(extra ? `${base} ${extra}` : base)
+    void (async () => {
+      setSubmitting(true)
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message, newsletter, company }),
+        })
+        const data = await res.json().catch(() => ({}))
+        if (!res.ok) {
+          const base = data.error || 'Something went wrong. Please try again.'
+          const extra = typeof data.detail === 'string' ? data.detail.trim().slice(0, 180) : ''
+          throw new Error(extra ? `${base} ${extra}` : base)
+        }
+        setSubmitted(true)
+        form.reset()
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Something went wrong.')
+      } finally {
+        setSubmitting(false)
       }
-      setSubmitted(true)
-      form.reset()
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
-    } finally {
-      setSubmitting(false)
-    }
+    })()
   }
 
   return (
@@ -62,7 +66,7 @@ export function ComingSoon() {
               <div className="lcaf-rule" aria-hidden />
             </div>
 
-            <form onSubmit={handleSubmit} className="relative space-y-5" noValidate>
+            <form method="post" onSubmit={handleSubmit} className="relative space-y-5" noValidate>
               {/* Honeypot — leave hidden; bots fill it and the API rejects */}
               <div className="absolute -left-[9999px] opacity-0 pointer-events-none" aria-hidden="true">
                 <label htmlFor="cs-company">Company</label>
