@@ -54,7 +54,7 @@ export function ComingSoon() {
             <img
               src="/fulllogo_transparent.png"
               alt="Lung Cancer Awareness Foundation"
-              className="w-full max-w-72 sm:max-w-80 md:max-w-96 lg:max-w-[28rem] h-auto object-contain object-center"
+              className="w-full max-w-96 sm:max-w-[28rem] md:max-w-[34rem] lg:max-w-[40rem] h-auto object-contain object-center"
               width={576}
               height={144}
               decoding="async"
