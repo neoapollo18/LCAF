@@ -39,11 +39,10 @@ export function Work() {
         <FadeIn>
           <div className="lcaf-prose-dark max-w-none text-[17px] sm:text-[17.5px] leading-[1.7]">
             <p>
-              The <span className="lcaf-foundation-name">Lung Cancer Awareness Foundation</span> is building strategic
-              partnerships with leading institutions to accelerate a new era in how lung cancer is understood, detected,
-              and addressed. These partnerships reflect our commitment to bridge awareness, access, and innovation by
-              bringing together national scale, clinical expertise, and community impact to change outcomes in lung
-              cancer.
+              The Lung Cancer Awareness Foundation is building strategic partnerships with leading institutions to
+              accelerate a new era in how lung cancer is understood, detected, and addressed. These partnerships
+              reflect our commitment to bridge awareness, access, and innovation by bringing together national scale,
+              clinical expertise, and community impact to change outcomes in lung cancer.
             </p>
           </div>
         </FadeIn>
@@ -56,10 +55,10 @@ export function Work() {
             delay={100}
           >
             <p>
-              The <span className="lcaf-foundation-name">Lung Cancer Awareness Foundation</span> has partnered with the
-              American Cancer Society to launch the Accelerating Impact in Lung Cancer Fund — a dynamic, forward-looking
-              initiative designed to expand access to screening, increase public awareness, and support groundbreaking
-              research aimed at saving lives.
+              The Lung Cancer Awareness Foundation has partnered with the American Cancer Society to launch the
+              Accelerating Impact in Lung Cancer Fund — a dynamic, forward-looking initiative designed to expand
+              access to screening, increase public awareness, and support groundbreaking research aimed at saving
+              lives.
             </p>
             <p className="font-display text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400 !mb-0">
               This partnership is focused on three critical priorities:
@@ -101,11 +100,11 @@ export function Work() {
             delay={160}
           >
             <p>
-              In partnership with the USC Keck School of Medicine&apos;s Division of Thoracic Surgery, the{' '}
-              <span className="lcaf-foundation-name">Lung Cancer Awareness Foundation</span> is helping to advance a more
-              precise and inclusive approach to lung cancer detection. Together, we are supporting the development of
-              next-generation early detection strategies designed to better identify who should be screened — moving
-              beyond traditional criteria to include environmental, genetic, and demographic factors.
+              In partnership with the USC Keck School of Medicine&apos;s Division of Thoracic Surgery, the Lung Cancer
+              Awareness Foundation is helping to advance a more precise and inclusive approach to lung cancer
+              detection. Together, we are supporting the development of next-generation early detection strategies
+              designed to better identify who should be screened — moving beyond traditional criteria to include
+              environmental, genetic, and demographic factors.
             </p>
             <p className="font-display text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400 !mb-0">
               This partnership is focused on three critical priorities:
