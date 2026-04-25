@@ -10,10 +10,22 @@ import { Contact } from './pages/Contact'
 import { Donate } from './pages/Donate'
 import { Work } from './pages/Work'
 
-const comingSoon = import.meta.env.VITE_COMING_SOON === 'true'
+// Hosts that should serve the public coming-soon page. All other hosts
+// (lcaftesting.xyz, Vercel previews, localhost, etc.) render the full site.
+const COMING_SOON_HOSTS = new Set([
+  'lungcancerawarenessfoundation.org',
+  'www.lungcancerawarenessfoundation.org',
+])
+
+function shouldShowComingSoon() {
+  if (import.meta.env.VITE_COMING_SOON === 'true') return true
+  if (import.meta.env.VITE_COMING_SOON === 'false') return false
+  if (typeof window === 'undefined') return false
+  return COMING_SOON_HOSTS.has(window.location.hostname)
+}
 
 export default function App() {
-  if (comingSoon) {
+  if (shouldShowComingSoon()) {
     return <ComingSoonShell />
   }
 
