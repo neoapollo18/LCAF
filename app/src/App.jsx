@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { Layout } from './components/Layout'
-import { ComingSoonShell } from './components/ComingSoonShell'
 import { Home } from './pages/Home'
 import { About } from './pages/About'
 import { Founder } from './pages/Founder'
@@ -12,25 +11,7 @@ import { Work } from './pages/Work'
 import { Privacy } from './pages/Privacy'
 import { Terms } from './pages/Terms'
 
-// Hosts that should serve the public coming-soon page. All other hosts
-// (lcaftesting.xyz, Vercel previews, localhost, etc.) render the full site.
-const COMING_SOON_HOSTS = new Set([
-  'lungcancerawarenessfoundation.org',
-  'www.lungcancerawarenessfoundation.org',
-])
-
-function shouldShowComingSoon() {
-  if (import.meta.env.VITE_COMING_SOON === 'true') return true
-  if (import.meta.env.VITE_COMING_SOON === 'false') return false
-  if (typeof window === 'undefined') return false
-  return COMING_SOON_HOSTS.has(window.location.hostname)
-}
-
 export default function App() {
-  if (shouldShowComingSoon()) {
-    return <ComingSoonShell />
-  }
-
   return (
     <Routes>
       <Route element={<Layout />}>
