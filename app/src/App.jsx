@@ -9,6 +9,8 @@ import { Press } from './pages/Press'
 import { Contact } from './pages/Contact'
 import { Donate } from './pages/Donate'
 import { Work } from './pages/Work'
+import { Privacy } from './pages/Privacy'
+import { Terms } from './pages/Terms'
 
 // Hosts that should serve the public coming-soon page. All other hosts
 // (lcaftesting.xyz, Vercel previews, localhost, etc.) render the full site.
@@ -40,6 +42,8 @@ export default function App() {
         <Route path="press" element={<Press />} />
         <Route path="contact" element={<Contact />} />
         <Route path="donate" element={<Donate />} />
+        <Route path="privacy" element={<Privacy />} />
+        <Route path="terms" element={<Terms />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

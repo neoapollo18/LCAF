@@ -176,12 +176,12 @@ export function Layout() {
               © {new Date().getFullYear()} Lung Cancer Awareness Foundation Inc. All rights reserved.
             </p>
             <div className="flex gap-8 text-sm text-slate-500">
-              <a href="#" className="hover:text-slate-400 transition-colors">
+              <Link to="/privacy" className="hover:text-slate-400 transition-colors">
                 Privacy
-              </a>
-              <a href="#" className="hover:text-slate-400 transition-colors">
+              </Link>
+              <Link to="/terms" className="hover:text-slate-400 transition-colors">
                 Terms
-              </a>
+              </Link>
             </div>
           </div>
         </div>
